@@ -9,14 +9,27 @@
 #include <fcntl.h>
 #include "func.h"
 
+int run(char **args){
+  int a;
+  a = fork();
+  if (!a){
+    execvp(args[0], args);
+    return 0;
+  }else{
+    int status;
+    wait(&status);
+    return 0;
+  }
+}
 
 int main(){
-  while (1){
-  printf("Shell$ ");
-  char line[128];
-  scanf("%[^\n]s",line);
-  char ** args = parse_args( line );
-  execvp(args[0], args);
-  return 0;
+  while(1){
+    printf("Shell$ ");
+    char line[128];
+    fgets(line, 128, stdin);
+    char ** args = parse_args( line );
+    run(args);
+    printf("%s", line);
   }
+  return 0;
 }
