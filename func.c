@@ -11,14 +11,33 @@
 
 char ** parse_args( char *line) {
 
-  char *dummy = malloc(strlen(line) * sizeof(char));
-  strcpy(dummy, line);
-
-  char **separated = calloc( 1025 , sizeof(char*) );
-	
-  for (int i = 0; dummy; i++) { 
-    separated[i] = strsep(&dummy, " "); 
+  //Reduce multiple spaces to single spaces 
+  char *copy = malloc(strlen(line) * sizeof(char));
+  int i,j=0;
+  while (i < strlen(line) ) {
+    copy[j] = line[i];
+    if ( line[i] == ' ' ) {
+      while ( line[i+1] == ' ') {
+        i++;
+      }
+    }
+    i++;
+    j++;
   }
+  copy[j] = '\0';
+  i = 0;
+  j = 0;
 
-  return separated;	
+  //Every * of separated holds a command put within semicolons  
+  char **separated = calloc( 6 , sizeof(char*) );
+
+  while (copy) {
+    separated[i] = strsep(&copy, ";");
+    i++; 
+  }
+  separated[i] = NULL;
+
+  return separated; 
+
+
 }
