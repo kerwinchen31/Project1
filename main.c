@@ -28,7 +28,9 @@ int main(){
     char line[128];
     fgets(line, 128, stdin);
     char ** args = parse_args( line );
-    run(args);
+    for (int i = 0; args[i]; i++) {
+      run(space_args(args[i]));
+    }
     printf("%s", line);
   }
   return 0;

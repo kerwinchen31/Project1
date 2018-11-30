@@ -11,7 +11,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-char ** parse_args( char *line);
+char ** parse_args( char *linee);
+
+char ** space_args( char *line);
 
 
 //#endif 
