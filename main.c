@@ -13,12 +13,11 @@ int run(char **args){
   int a;
   a = fork();
   if (!a){
-    execvp(args[0], args);
-    return 0;
+    return execvp(args[0], args);
   }else{
     int status;
     wait(&status);
-    return 0;
+    return WEXITSTATUS(status);
   }
 }
 
