@@ -26,13 +26,13 @@ int main(){
     printf("Shell$ ");
     char line[128];
     fgets(line, 128, stdin);
-    for (int j = 0; line[j]; j++) {
-      printf("%d| %c->", j, line[j]);
-    }
+    //for (int j = 0; line[j]; j++) {
+    //  printf("%d| %c->", j, line[j]);
+    //}
     char ** args = parse_args( line );
     for (int i = 0; args[i]; i++) {
-      printf("running command #%d| %s\n", i, args[i] );
-    //   run(space_args(args[i]));
+    //  printf("running command #%d| %s\n", i, args[i] );
+       run(space_args(args[i]));
     }
     // printf("%s", line);
   }
