@@ -11,6 +11,13 @@
 
 int run(char **args){
   int a;
+  if (!strcmp(args[0], "cd")){
+    char *dir = args[1];
+    int new = chdir(dir);
+  }
+  if (!strcmp(args[0], "exit")){
+    exit(0);
+  }
   a = fork();
   if (!a){
     return execvp(args[0], args);
@@ -31,8 +38,8 @@ int main(){
     //}
     char ** args = parse_args( line );
     for (int i = 0; args[i]; i++) {
-    //   printf("running command #%d| %s\n", i, args[i] );
-       run(space_args(args[i]));
+      //   printf("running command #%d| %s\n", i, args[i] );
+      run(space_args(args[i]));
     }
     // printf("%s", line);
   }
