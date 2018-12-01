@@ -31,7 +31,7 @@ int main(){
     //}
     char ** args = parse_args( line );
     for (int i = 0; args[i]; i++) {
-    //  printf("running command #%d| %s\n", i, args[i] );
+    //   printf("running command #%d| %s\n", i, args[i] );
        run(space_args(args[i]));
     }
     // printf("%s", line);
