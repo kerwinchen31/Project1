@@ -60,7 +60,7 @@ int main(){
   int keepRunning = 1;
   while(keepRunning){
     //signal(SIGTERM, sighandler);
-    printf("Shell$ ");
+    printf("%s Shell~$ ", getcwd(0,0));
     char line[128];
     fgets(line, 128, stdin);
     //for (int j = 0; line[j]; j++) {
