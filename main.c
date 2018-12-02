@@ -15,9 +15,6 @@ int run(char **args){
     char *dir = args[1];
     int new = chdir(dir);
   }
-  if (!strcmp(args[0], "exit")){
-    exit(0);
-  }
   a = fork();
   if (!a){
     return execvp(args[0], args);
@@ -29,7 +26,9 @@ int run(char **args){
 }
 
 int main(){
-  while(1){
+  int keepRunning = 1;
+  while(keepRunning){
+    //signal(SIGTERM, sighandler);
     printf("Shell$ ");
     char line[128];
     fgets(line, 128, stdin);
@@ -38,10 +37,14 @@ int main(){
     //}
     char ** args = parse_args( line );
     for (int i = 0; args[i]; i++) {
-      //   printf("running command #%d| %s\n", i, args[i] );
+      if (!strcmp(args[i], "exit")){
+	//keepRunning = 0;
+	//printf("GOTCHA\n");
+	exit(0);
+      }
       run(space_args(args[i]));
+      // printf("%s", line);
     }
-    // printf("%s", line);
   }
   return 0;
 }
