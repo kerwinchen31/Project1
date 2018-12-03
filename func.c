@@ -84,27 +84,22 @@ char ** space_args( char *line) {
   }
   return separated; 
 }
-void redirect(char ** args, int symbol){
-  /* if (!(strcmp(args[1], ">") && args[1])){ */
-  /*   int greater = 1; */
-  /*   int k = 0;/\* */
-  /*     for (; k < 100; k++){ */
-  /*     printf("hello\n"); */
-  /*     printf("yes %s\n", args[k]); */
-  /*     if (!strcmp(args[k],">")){ */
-  /*     greater = 1; */
-  /*     printf("GREATERR %d\n",greater);  */
-  /*     } */
-  /*     }*\/ */
-  /*   /\*char ** a[50]; */
-  /*  for (int x = 0; x < k; x ++){ */
-  /*  a[x] = args[x]; */
-  /*  }*\/ */
+void redirect_out(char ** args, int symbol){
   int backup = dup(1);
   int fd = open(args[symbol + 1], O_WRONLY | O_CREAT, 777);
   dup2(fd, 1);
   args[symbol] = NULL;
   execvp(args[0], args);
   dup2(backup, 1);
+  close(fd);
+}
+
+void redirect_in(char ** args, int symbol){
+  int backup = dup(0);
+  int fd = open(args[symbol + 1], O_RDONLY, 777);
+  dup2(fd, 0);
+  args[symbol] = NULL;
+  execvp(args[0], args);
+  dup2(backup, 0);
   close(fd);
 }

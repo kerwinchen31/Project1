@@ -20,8 +20,10 @@ int run(char **args){
     int i = 0;
     for (; args[i]; i++){}
     if (i >= 3){
-      if (!strcmp(args[i - 2], ">")){
-	redirect(args, i-2);
+      if (!strcmp(args[i - 2], "<")){
+	redirect_in(args, i-2);
+      }else if(!strcmp(args[i - 2], ">")){
+	redirect_out(args, i-2);
       }else{
 	return execvp(args[0], args);
       }

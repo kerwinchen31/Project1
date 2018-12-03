@@ -1,6 +1,3 @@
-//#ifndef SHELL_H
-//#define SHELL_H
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,6 +12,7 @@ char ** parse_args( char *linee);
 
 char ** space_args( char *line);
 
-void redirect(char ** args, int symbol);
+void redirect_out(char ** args, int symbol);
 
-//#endif 
+void redirect_in(char ** args, int symbol);
+
