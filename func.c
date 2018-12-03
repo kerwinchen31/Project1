@@ -8,7 +8,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "func.h"
-
 char ** parse_args(char * linee) {
   char * line = malloc(strlen(linee) * sizeof(char));
   strncpy(line, linee, strlen(linee) - 1);
@@ -29,15 +28,11 @@ char ** parse_args(char * linee) {
       while (line[i + 1] == ';') {
         i++;
       }
-      if (line[i +1] == '\0') {
-	j++;
-	break;
-      }
     }
     copy[j] = line[i];
     if (line[i] == ';') {
       while (line[i + 1] == ';') {
-	i++;
+ i++;
       }
       while (line[i + 1] == ' ') {
         i++;
@@ -75,13 +70,10 @@ char ** parse_args(char * linee) {
   //printf("\n");
   return separated;
 }
-
 char ** space_args( char *line) {
-
   // I don't want to modify line.
   char *dummy = malloc(strlen(line) * sizeof(char));
   strcpy(dummy, line);
-
   // At most 5 arguments of strings (array of chars / char pointers) 
   char **separated = calloc( 6 , sizeof(char*) );
   
@@ -90,26 +82,24 @@ char ** space_args( char *line) {
     separated[i] = strsep(&dummy, " "); 
     //printf("%s \n", separated[i]);
   }
-
   return separated; 
 }
-
 void redirect(char ** args, int symbol){
   /* if (!(strcmp(args[1], ">") && args[1])){ */
   /*   int greater = 1; */
   /*   int k = 0;/\* */
-  /* 		  for (; k < 100; k++){ */
-  /* 		  printf("hello\n"); */
-  /* 		  printf("yes %s\n", args[k]); */
-  /* 		  if (!strcmp(args[k],">")){ */
-  /* 		  greater = 1; */
-  /* 		  printf("GREATERR %d\n",greater);  */
-  /* 		  } */
-  /* 		  }*\/ */
+  /*     for (; k < 100; k++){ */
+  /*     printf("hello\n"); */
+  /*     printf("yes %s\n", args[k]); */
+  /*     if (!strcmp(args[k],">")){ */
+  /*     greater = 1; */
+  /*     printf("GREATERR %d\n",greater);  */
+  /*     } */
+  /*     }*\/ */
   /*   /\*char ** a[50]; */
-  /* 	for (int x = 0; x < k; x ++){ */
-  /* 	a[x] = args[x]; */
-  /* 	}*\/ */
+  /*  for (int x = 0; x < k; x ++){ */
+  /*  a[x] = args[x]; */
+  /*  }*\/ */
   int backup = dup(1);
   int fd = open(args[symbol + 1], O_WRONLY | O_CREAT, 777);
   dup2(fd, 1);
