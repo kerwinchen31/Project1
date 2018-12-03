@@ -29,6 +29,10 @@ char ** parse_args(char * linee) {
       while (line[i + 1] == ';') {
         i++;
       }
+      if (line[i +1] == '\0') {
+	j++;
+	break;
+      }
     }
     copy[j] = line[i];
     if (line[i] == ';') {
