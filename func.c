@@ -78,14 +78,39 @@ char ** space_args( char *line) {
   char *dummy = malloc(strlen(line) * sizeof(char));
   strcpy(dummy, line);
 
-    // At most 5 arguments of strings (array of chars / char pointers) 
+  // At most 5 arguments of strings (array of chars / char pointers) 
   char **separated = calloc( 6 , sizeof(char*) );
   
   for (int i = 0; dummy; i++) { 
-  // i is the current arg of separated, dummy keeps getting split until you hit the NULL at the end
+    // i is the current arg of separated, dummy keeps getting split until you hit the NULL at the end
     separated[i] = strsep(&dummy, " "); 
     //printf("%s \n", separated[i]);
   }
 
   return separated; 
+}
+
+void redirect(char ** args, int symbol){
+  /* if (!(strcmp(args[1], ">") && args[1])){ */
+  /*   int greater = 1; */
+  /*   int k = 0;/\* */
+  /* 		  for (; k < 100; k++){ */
+  /* 		  printf("hello\n"); */
+  /* 		  printf("yes %s\n", args[k]); */
+  /* 		  if (!strcmp(args[k],">")){ */
+  /* 		  greater = 1; */
+  /* 		  printf("GREATERR %d\n",greater);  */
+  /* 		  } */
+  /* 		  }*\/ */
+  /*   /\*char ** a[50]; */
+  /* 	for (int x = 0; x < k; x ++){ */
+  /* 	a[x] = args[x]; */
+  /* 	}*\/ */
+  int backup = dup(1);
+  int fd = open(args[symbol + 1], O_WRONLY | O_CREAT, 777);
+  dup2(fd, 1);
+  args[symbol] = NULL;
+  execvp(args[0], args);
+  dup2(backup, 1);
+  close(fd);
 }

@@ -15,5 +15,6 @@ char ** parse_args( char *linee);
 
 char ** space_args( char *line);
 
+void redirect(char ** args, int symbol);
 
 //#endif 
