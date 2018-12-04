@@ -107,3 +107,41 @@ void redirect_in(char ** args, int symbol){
   dup2(backup, 0);
   close(fd);
 }
+
+void pipey_boi(char ** args) {
+  int i = 0;
+  char *from[100];
+  while ( !strchr(args[i], '|') ) {
+    from[i] = args[i];
+    i++;
+  }
+  from[i] = NULL;
+  i++;
+  int j = 0;
+  char *to[100];
+  while ( args[i] ) {
+    to[j] =args[i];
+    i++;
+    j++;
+  }
+  to[j] = NULL;
+  pid_t pid1, pid2;
+  int pipefd[2];
+  pipe(pipefd);
+  pid1 = fork();
+  if (pid1==0) {
+    dup2(pipefd[1], STDOUT_FILENO);
+    close(pipefd[0]);
+    execvp(from[0],from);
+  }
+  pid2=fork();
+  if (pid2==0) {
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[1]);
+    execvp(to[0],to);
+  }
+  close(pipefd[0]);
+  close(pipefd[1]);
+  wait(pid1);
+  wait(pid2);
+}
