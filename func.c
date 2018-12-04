@@ -62,8 +62,36 @@ char ** parse_args(char * linee) {
     copy[strlen(copy) - 1] = '\0';
   }
   char ** separated = calloc(6, sizeof(char * ));
-  while (copy) {
-    separated[i] = strsep( & copy, ";");
+  char *better = malloc(strlen(linee) * 2 * sizeof(char));
+  while (copy[i]) {
+    if ( (copy[i+1] == '<') || (copy[i+1] == '>') || (copy[i+1] == '|') ) {
+      if ( copy[i] != ' ' ) {
+        better[j] = copy[i];
+        // printf("copying %c\n", copy[i]);
+        i++;
+        j++;
+        better[j] = ' ';
+        // printf("copying ' '\n");
+        j++;
+      }
+    }
+    better[j] = copy[i];
+    if ( (copy[i] == '<') || (copy[i] == '>') || (copy[i] == '|') ) {
+      if ( copy[i+1] != ' ' ) {
+        j++;
+        i++;
+        better[j] = ' ';
+        j++;
+        better[j] = copy[i];
+      }
+    }
+    j++;
+    i++;
+  }
+  i=0;
+  j=0;
+  while (better) {
+    separated[i] = strsep( & better, ";");
     i++;
   }
   separated[i] = NULL;
