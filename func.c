@@ -88,10 +88,8 @@ char ** parse_args(char * linee) {
     j++;
     i++;
   }
-  i=0;
-  j=0;
-  while (better) {
-    separated[i] = strsep( & better, ";");
+  while (copy) {
+    separated[i] = strsep( & copy, ";");
     i++;
   }
   separated[i] = NULL;
