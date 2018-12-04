@@ -18,7 +18,11 @@ int run(char **args){
   a = fork();
   if (!a){
     int i = 0;
-    for (; args[i]; i++){}
+    for (; args[i]; i++){
+      // if ( chrstr(args[i], '|')) {
+      //   pipey_boi(args);
+      // }
+    }
     if (i >= 3){
       if (!strcmp(args[i - 2], "<")){
 	redirect_in(args, i-2);
